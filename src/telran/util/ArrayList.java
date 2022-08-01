@@ -15,17 +15,17 @@ public ArrayList() {
 	this(DEFAULT_CAPACITY);
 }
 private class ArrayListIterator implements Iterator<T> {
-
+int currentInd = 0;
 	@Override
 	public boolean hasNext() {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return currentInd < size;
 	}
 
 	@Override
 	public T next() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return array[currentInd++];
 	}
 	
 }
@@ -40,24 +40,40 @@ private class ArrayListIterator implements Iterator<T> {
 
 	@Override
 	public boolean remove(Object pattern) {
-		// TODO Auto-generated method stub
 		//array reallocation isn't done
 		//that is new array won't be created - essence of remove
 		//to use System.arraycopy
 		// size--
-		return false;
+		boolean res = false;
+		int index = indexOf(pattern);
+		if (index >= 0) {
+			res =true;
+			removeByIndex(index);
+		}
+		
+		return res;
+	}
+	
+	private void removeByIndex(int index) {
+		size--;
+		System.arraycopy(array, index+1, array, index, size - index);
 	}
 
 	@Override
 	public boolean removeIf(Predicate<T> predicate) {
-		// TODO Auto-generated method stub
-		return false;
+		int sizeOld = size;
+		for (int i = size - 1; i >= 0; i--) {
+			if (predicate.test(array[i])) {
+				removeByIndex(i);
+			}
+		}
+		return sizeOld > size;
 	}
 
 	@Override
 	public boolean contains(Object pattern) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return indexOf(pattern) >= 0;
 	}
 
 	@Override
@@ -74,34 +90,64 @@ private class ArrayListIterator implements Iterator<T> {
 
 	@Override
 	public boolean add(int index, T obj) {
-		// TODO Auto-generated method stub
 		//if size == array.length you should do reallocation see the method add
 				//if size < array.length new array won't be created - essence of the algorithm
-		return false;
+		boolean res = false;
+		if (index >= 0 && index <= size) {
+			res = true;
+			if (size == array.length) {
+				array = Arrays.copyOf(array, size * 2);
+			}
+			System.arraycopy(array, index, array, index + 1, size - index);
+			array[index] = obj;
+			size++;
+		}
+		return res;
 	}
 
 	@Override
 	public T remove(int index) {
-		// TODO Auto-generated method stub
-		return null;
+		T res = null;
+		if (checkExistingIndex(index)) {
+			res = array[index];
+			removeByIndex(index);
+			
+		}
+		return res;
 	}
 
+	private boolean checkExistingIndex(int index) {
+		
+		return index >= 0 && index < size;
+	}
 	@Override
 	public int indexOf(Object pattern) {
-		// TODO Auto-generated method stub
-		return 0;
+		int res = -1;
+		for(int i = 0; i < size; i++) {
+			if (array[i].equals(pattern)) {
+				res = i;
+				break;
+			}
+		}
+		return res;
 	}
 
 	@Override
 	public int lastIndexOf(Object pattern) {
-		// TODO Auto-generated method stub
+		int res = -1;
+		for (int i = size - 1; i >= 0; i--) {
+			if (array[i].equals(pattern)) {
+				res = i;
+				break;
+			}
+		}
 		
-		return 0;
+		return res;
 	}
 	@Override
 	public T get(int index) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return checkExistingIndex(index) ? array[index] : null;
 	}
 
 }
