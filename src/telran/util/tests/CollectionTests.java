@@ -29,8 +29,8 @@ Integer expected[] = {10, -5, 13, 20, 40, 15};
 	}
 @Test
 	void addTest() {
-		assertTrue(collection.add(100));
-		assertTrue(collection.add(10));
+		assertTrue(collection.add(100)); //adding not existing number
+		assertTrue(collection.add(10)); //adding existing number
 		int size = collection.size();
 		for(int i = 0; i < N_NUMBERS; i++) {
 			collection.add(100);

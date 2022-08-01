@@ -25,7 +25,7 @@ int currentInd = 0;
 	@Override
 	public T next() {
 		
-		return array[currentInd++];
+		return  array[currentInd++];
 	}
 	
 }
@@ -62,9 +62,12 @@ int currentInd = 0;
 	@Override
 	public boolean removeIf(Predicate<T> predicate) {
 		int sizeOld = size;
-		for (int i = size - 1; i >= 0; i--) {
+		int i = 0;
+		while (i < size) {
 			if (predicate.test(array[i])) {
 				removeByIndex(i);
+			} else {
+				i++;
 			}
 		}
 		return sizeOld > size;
