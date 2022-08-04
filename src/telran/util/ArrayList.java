@@ -73,11 +73,7 @@ int currentInd = 0;
 		return sizeOld > size;
 	}
 
-	@Override
-	public boolean contains(Object pattern) {
-		
-		return indexOf(pattern) >= 0;
-	}
+	
 
 	@Override
 	public int size() {
