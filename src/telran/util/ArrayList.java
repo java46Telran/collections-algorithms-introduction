@@ -149,12 +149,35 @@ boolean flNext = false;
 	}
 	@Override
 	public boolean removeIf (Predicate<T> predicate) {
-		//TODO
+		
 		//Write the method for removing all objects matching the given 
 		//predicate with O[N]
 		//bonus: with no additional array (playing with two indexes)
-		//take into consideration a possible memory leak (reference from index == size should be null's)
-		return false;
+		//take into consideration a possible memory leak 
+		//(reference from index == size should be null's)
+		boolean res = false;
+		int indDestination = 0;
+		int sizeAfterDeletion = size;
+		for (int indSource = 0; indSource < size; indSource++) {
+			if (predicate.test(array[indSource])) {
+				sizeAfterDeletion--;
+			} else {
+				array[indDestination++] = array[indSource];
+			}
+		}
+		res = afterDeletionProcessing(sizeAfterDeletion);
+		return res;
+	}
+	private boolean afterDeletionProcessing(int sizeAfterDeletion) {
+		boolean res = false;
+		if (sizeAfterDeletion < size) {
+			res = true;
+			for (int i = sizeAfterDeletion; i < size; i++) {
+				array[i] = null;
+			}
+			size = sizeAfterDeletion;
+		}
+		return res;
 	}
 
 }

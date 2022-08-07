@@ -12,7 +12,8 @@ import org.junit.jupiter.api.Test;
 import telran.util.Collection;
 
 abstract class CollectionTests {
-	protected static final int N_NUMBERS = 100;
+	protected static final int N_NUMBERS = 10000;
+	private static final int N_RUNS = 10000;
 	protected Collection<Integer> collection;
 
 	protected abstract Collection<Integer> createCollection();
@@ -94,6 +95,20 @@ abstract class CollectionTests {
 		it.next();
 		it.remove(); //two removes with no next
 		wrongRemove(it);
+	}
+	@Test
+	void removeIfPerformanceTest() {
+		Predicate<Integer> predicate = new AllFalsePredicate().negate();
+		for (int i = 0; i < N_RUNS; i++) {
+			fillLargeCollection();
+			collection.removeIf(predicate);
+		}
+	}
+	private void fillLargeCollection() {
+		for(int i = 0; i < N_NUMBERS; i++) {
+			collection.add(i);
+		}
+		
 	}
 
 	protected  void wrongRemove(Iterator<Integer> it) {

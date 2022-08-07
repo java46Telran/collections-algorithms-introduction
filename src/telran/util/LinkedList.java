@@ -252,8 +252,17 @@ public class LinkedList<T> implements List<T> {
 	 * current - {10, -5, 30} - after reverse - {30, -5. 10}
 	 */
 	public void reverse() {
-		//TODO write implementation
-		//TODO write test (Think where there should be test for the method reverse)
+		int limit = size / 2 ;
+		Node<T> forwardCurrent = head;
+		Node<T> backwardCurrent = tail;
+		for (int i = 0; i < limit; i++, forwardCurrent = forwardCurrent.next,
+				backwardCurrent = backwardCurrent.prev) {
+			T tmp = forwardCurrent.obj;
+			forwardCurrent.obj = backwardCurrent.obj;
+			backwardCurrent.obj = tmp;
+			
+		}
+		
 	}
 
 }
