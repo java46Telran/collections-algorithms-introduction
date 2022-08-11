@@ -2,6 +2,8 @@ package telran.util.tests;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Arrays;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,14 +19,15 @@ public class TreeSetTest extends SetTests {
 	}
 	@Override
 	@BeforeEach
-	void setUp() {
-		this.setUp();
+	void setUp() throws Exception {
+		super.setUp();
 		tree = (TreeSet<Integer>)collection;
 	}
 	@Test
 	@Override
 	void toArrayTest() {
-		
+		Arrays.sort(expected);
+		super.toArrayTest();
 	}
 	@Test
 	void firstTest() {
