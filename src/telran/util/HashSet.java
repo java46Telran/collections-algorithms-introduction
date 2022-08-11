@@ -1,6 +1,7 @@
 package telran.util;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class HashSet<T> implements Set<T> {
 private static final double DEFAULT_FACTOR = 0.75;
@@ -21,22 +22,67 @@ public HashSet() {
 }
 
 private class HashSetIterator implements Iterator<T> {
-//TODO
-	@Override
-	public boolean hasNext() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	Iterator<T> currentIterator;
+	Iterator<T> prevIterator;
+	int indexIterator = 0;
+	boolean flNext = false;
+	HashSetIterator() {
 
-	@Override
-	public T next() {
-		// TODO Auto-generated method stub
-		return null;
+		getCurrentIterator();
 	}
-	@Override
-	public void remove() {
-		//TODO
-	}
+		@Override
+		public boolean hasNext() {
+			return currentIterator != null;
+		}
+
+		@Override
+		public T next() {
+			if (!hasNext()) {
+				throw new NoSuchElementException();
+			}
+			T res = currentIterator.next();
+			prevIterator = currentIterator;
+			getCurrentIterator();
+			flNext = true;
+			return res;
+		}
+		private void getCurrentIterator() {
+			if (currentIterator == null || !currentIterator.hasNext()) {
+				Iterator<T> it = null;
+				while(it == null || !it.hasNext()) {
+					
+					List<T> list = getList();
+					indexIterator++;
+					
+					if (list == null) {
+						currentIterator = null;
+						return;
+					}
+					it = list.iterator();
+				}
+				currentIterator = it;
+			}
+			
+		}
+
+		private List<T> getList() {
+			while(indexIterator < hashTable.length &&
+					hashTable[indexIterator] == null) {
+				indexIterator++;
+			}
+			return indexIterator < hashTable.length ?
+					hashTable[indexIterator] : null;
+		}
+
+		@Override
+		public void remove() {
+			if(!flNext) {
+				throw new IllegalStateException();
+			}
+			prevIterator.remove();
+			flNext = false;
+			size--;
+		}
 }
 	@Override
 	public boolean add(T obj) {
