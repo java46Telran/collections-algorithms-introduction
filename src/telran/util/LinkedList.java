@@ -9,20 +9,23 @@ public class LinkedList<T> implements List<T> {
 		T obj;
 		Node<T> next;
 		Node<T> prev;
+
 		Node(T obj) {
 			this.obj = obj;
 		}
 	}
+
 	private Node<T> head;
 	private Node<T> tail;
 	private int size;
-	
+
 	private class LinkedListIterator implements Iterator<T> {
 		Node<T> current = head;
 		boolean flNext = false;
+
 		@Override
 		public boolean hasNext() {
-			
+
 			return current != null;
 		}
 
@@ -36,6 +39,7 @@ public class LinkedList<T> implements List<T> {
 			flNext = true;
 			return res;
 		}
+
 		@Override
 		public void remove() {
 			if (!flNext) {
@@ -47,9 +51,9 @@ public class LinkedList<T> implements List<T> {
 				removeNode(current.prev);
 			}
 			flNext = false;
-			
+
 		}
-		
+
 	}
 
 	@Override
@@ -77,21 +81,21 @@ public class LinkedList<T> implements List<T> {
 			res = true;
 			Node<T> node = getNodeIndex(index);
 			removeNode(node);
-			
+
 		}
 		return res;
 	}
 
 	private void removeNode(Node<T> node) {
-		if(node == head) {
+		if (node == head) {
 			removeHead();
-		} else if(node == tail) {
+		} else if (node == tail) {
 			removeTail();
 		} else {
 			removeNodeMiddle(node);
 		}
 		size--;
-		
+
 	}
 
 	private void removeNodeMiddle(Node<T> node) {
@@ -99,13 +103,13 @@ public class LinkedList<T> implements List<T> {
 		Node<T> nodeBefore = node.prev;
 		nodeBefore.next = nodeAfter;
 		nodeAfter.prev = nodeBefore;
-		
+
 	}
 
 	private void removeTail() {
 		tail = tail.prev;
 		tail.next = null;
-		
+
 	}
 
 	private void removeHead() {
@@ -115,22 +119,18 @@ public class LinkedList<T> implements List<T> {
 			head = head.next;
 			head.prev = null;
 		}
-		
+
 	}
-
-	
-
-	
 
 	@Override
 	public int size() {
-		
+
 		return size;
 	}
 
 	@Override
 	public Iterator<T> iterator() {
-		
+
 		return new LinkedListIterator();
 	}
 
@@ -140,7 +140,7 @@ public class LinkedList<T> implements List<T> {
 			throw new NullPointerException();
 		}
 		boolean res = false;
-		if (index >=0 && index <= size) {
+		if (index >= 0 && index <= size) {
 			res = true;
 			if (index == size) {
 				add(obj);
@@ -162,11 +162,11 @@ public class LinkedList<T> implements List<T> {
 		beforeNode.next = newNode;
 		newNode.prev = beforeNode;
 		size++;
-		
+
 	}
 
 	private Node<T> getNodeIndex(int index) {
-		
+
 		return index > size / 2 ? getNodeRightToLeft(index) : getNodeLeftToRight(index);
 	}
 
@@ -192,12 +192,11 @@ public class LinkedList<T> implements List<T> {
 		newNode.next = head;
 		head.prev = newNode;
 		head = newNode;
-		
-		
+
 	}
 
 	private boolean checkExistingIndex(int index) {
-		
+
 		return index >= 0 && index < size;
 	}
 
@@ -216,7 +215,7 @@ public class LinkedList<T> implements List<T> {
 	public int indexOf(Object pattern) {
 		int res = -1;
 		int ind = 0;
-		for(Node<T> current = head; current != null; current = current.next, ind++) {
+		for (Node<T> current = head; current != null; current = current.next, ind++) {
 			if (current.obj.equals(pattern)) {
 				res = ind;
 				break;
@@ -229,7 +228,7 @@ public class LinkedList<T> implements List<T> {
 	public int lastIndexOf(Object pattern) {
 		int res = -1;
 		int ind = size - 1;
-		for(Node<T> current = tail; current != null; current = current.prev, ind--) {
+		for (Node<T> current = tail; current != null; current = current.prev, ind--) {
 			if (current.obj.equals(pattern)) {
 				res = ind;
 				break;
@@ -247,16 +246,31 @@ public class LinkedList<T> implements List<T> {
 		}
 		return res;
 	}
+
 	/**
-	 * performs reversing of the objects order
-	 * current - {10, -5, 30} - after reverse - {30, -5. 10}
+	 * performs reversing of the objects order current - {10, -5, 30} - after
+	 * reverse - {30, -5. 10}
 	 */
 	public void reverse() {
-		//TODO
-		//no cycles allowed
-			
+		// TODO
+		// no cycles allowed
+		if (head != null) {
+			reverse(head, tail);
 		}
-		
 	}
 
+	private void reverse(Node<T> left, Node<T> right) {
+		if (left != right && left.prev != right) {
+			swap(left, right);
+			reverse(left.next, right.prev);
+		}
 
+	}
+
+	private void swap(Node<T> left, Node<T> right) {
+		T tmp = left.obj;
+		left.obj = right.obj;
+		right.obj = tmp;
+	}
+
+}

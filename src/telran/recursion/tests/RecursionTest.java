@@ -27,6 +27,11 @@ int count = 0;
 		int ar[] = {1, 2, 3, 4};
 		assertEquals(10, sum(ar));
 	}
+	@Test
+	void squareTest() {
+		assertEquals(100, square(10));
+		assertEquals(100, square(-10));
+	}
 	
 //	private void f() {
 //		
