@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import telran.util.Collection;
 import telran.util.TreeSet;
 
-public class TreeSetTest extends SetTests {
+public class TreeSetTest extends SortedSetTests {
     TreeSet<Integer> tree;
 	@Override
 	protected Collection<Integer> createCollection() {
@@ -24,20 +24,8 @@ public class TreeSetTest extends SetTests {
 		super.setUp();
 		tree = (TreeSet<Integer>)collection;
 	}
-	@Test
-	@Override
-	void toArrayTest() {
-		Arrays.sort(expected);
-		super.toArrayTest();
-	}
-	@Test
-	void firstTest() {
-		assertEquals((Integer)(-5), tree.first());
-	}
-	@Test
-	void lastTest() {
-		assertEquals((Integer)(40), tree.last());
-	}
+	
+	
 	@Test
 	void displayRotatedTest() {
 		System.out.println("*".repeat(10));

@@ -88,6 +88,8 @@ abstract class CollectionTests {
 	@Test
 	void containsTest() {
 		assertTrue(collection.contains(10));
+		assertTrue(collection.contains(-5));
+		assertTrue(collection.contains(40));
 		assertFalse(collection.contains(1000));
 	}
 
@@ -119,7 +121,7 @@ abstract class CollectionTests {
 		wrongRemove(it);
 	}
 
-	//@Test
+	@Test
 	void removeIfPerformanceTest() {
 		Predicate<Integer> predicate = new AllFalsePredicate().negate();
 		for (int i = 0; i < N_RUNS; i++) {
