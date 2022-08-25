@@ -114,21 +114,8 @@ boolean flNext = false;
 		return res;
 	}
 
-	private boolean checkExistingIndex(int index) {
-		
-		return index >= 0 && index < size;
-	}
-	@Override
-	public int indexOf(Object pattern) {
-		int res = -1;
-		for(int i = 0; i < size; i++) {
-			if (array[i].equals(pattern)) {
-				res = i;
-				break;
-			}
-		}
-		return res;
-	}
+	
+	
 
 	@Override
 	public int lastIndexOf(Object pattern) {

@@ -363,7 +363,20 @@ public class TreeSet<T> implements SortedSet<T> {
 		return node.parent;
 	}
 	private Node<T> getNextNode(Node<T> current) {
-		return current.right != null ? getLeastNodeFrom(current.right) : getGreaterParent(current);
+		return current.right != null ? getLeastNodeFrom(current.right) :
+			getGreaterParent(current);
+	}
+
+	@Override
+	public T ceiling(T pattern) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public T floor(T pattern) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

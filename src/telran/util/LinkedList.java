@@ -195,10 +195,7 @@ public class LinkedList<T> implements List<T> {
 
 	}
 
-	private boolean checkExistingIndex(int index) {
-
-		return index >= 0 && index < size;
-	}
+	
 
 	@Override
 	public T remove(int index) {
@@ -211,18 +208,7 @@ public class LinkedList<T> implements List<T> {
 		return res;
 	}
 
-	@Override
-	public int indexOf(Object pattern) {
-		int res = -1;
-		int ind = 0;
-		for (Node<T> current = head; current != null; current = current.next, ind++) {
-			if (current.obj.equals(pattern)) {
-				res = ind;
-				break;
-			}
-		}
-		return res;
-	}
+	
 
 	@Override
 	public int lastIndexOf(Object pattern) {
