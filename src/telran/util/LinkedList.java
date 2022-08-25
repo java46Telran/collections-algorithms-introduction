@@ -2,9 +2,8 @@ package telran.util;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-import java.util.function.Predicate;
 
-public class LinkedList<T> implements List<T> {
+public class LinkedList<T> extends AbstractCollection<T> implements List<T> {
 	private static class Node<T> {
 		T obj;
 		Node<T> next;
@@ -17,7 +16,6 @@ public class LinkedList<T> implements List<T> {
 
 	private Node<T> head;
 	private Node<T> tail;
-	private int size;
 
 	private class LinkedListIterator implements Iterator<T> {
 		Node<T> current = head;
@@ -122,11 +120,7 @@ public class LinkedList<T> implements List<T> {
 
 	}
 
-	@Override
-	public int size() {
-
-		return size;
-	}
+	
 
 	@Override
 	public Iterator<T> iterator() {

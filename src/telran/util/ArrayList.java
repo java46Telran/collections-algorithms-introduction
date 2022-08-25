@@ -3,10 +3,9 @@ package telran.util;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.function.Predicate;
-public class ArrayList<T> implements List<T> {
+public class ArrayList<T> extends AbstractCollection<T> implements List<T> {
 private static final int DEFAULT_CAPACITY = 16;
 private T[] array;
-private int size;
 @SuppressWarnings("unchecked")
 public ArrayList(int capacity) {
 	array = (T[]) new Object[capacity];
@@ -74,11 +73,6 @@ boolean flNext = false;
 
 	
 
-	@Override
-	public int size() {
-		
-		return size;
-	}
 
 	@Override
 	public Iterator<T> iterator() {

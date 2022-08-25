@@ -4,7 +4,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class TreeSet<T> implements SortedSet<T> {
+public class TreeSet<T> extends AbstractCollection<T> implements SortedSet<T> {
 	private static class Node<T> {
 		T obj;
 		Node<T> parent;
@@ -21,7 +21,6 @@ public class TreeSet<T> implements SortedSet<T> {
 	private static final int N_SYMBOLS_PER_LEVEL = 2;
 
 	private Node<T> root;
-	int size;
 	Comparator<T> comp;
 
 	private Node<T> getLeastNodeFrom(Node<T> node) {
@@ -209,11 +208,7 @@ public class TreeSet<T> implements SortedSet<T> {
 		return node != null && comp.compare(tPattern, node.obj) == 0;
 	}
 
-	@Override
-	public int size() {
-
-		return size;
-	}
+	
 
 	@Override
 	public Iterator<T> iterator() {
