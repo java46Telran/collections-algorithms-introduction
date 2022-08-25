@@ -55,17 +55,11 @@ public class TreeSet<T> implements SortedSet<T> {
 		}
 
 		private void updateCurrent() {
-			current = current.right != null ? getLeastNodeFrom(current.right) : getGreaterParent(current);
+			current = getNextNode(current);
 
 		}
 
-		private Node<T> getGreaterParent(Node<T> node) {
-
-			while (node.parent != null && node.parent.left != node) {
-				node = node.parent;
-			}
-			return node.parent;
-		}
+		
 
 		@Override
 		public void remove() {
@@ -334,6 +328,42 @@ public class TreeSet<T> implements SortedSet<T> {
 		//root.left = balance call from left (left, rootIndex - 1)
 		//root.right = balance call from right(rootIndex + 1, right)
 		//don't forget about parent
+		Node<T> [] arrayNodes = getArrayNodes();
+		root = getBalancedRoot(arrayNodes, 0, size - 1, null);
+	}
+
+	private Node<T> getBalancedRoot(Node<T>[] arrayNodes, int left, int right, Node<T> parent) {
+		Node<T> root = null;
+		if (left <= right) {
+			int indexRoot = (left + right) / 2;
+			root = arrayNodes[indexRoot];
+			root.left = getBalancedRoot(arrayNodes, left, indexRoot - 1, root);
+			root.right = getBalancedRoot(arrayNodes, indexRoot + 1, right, root);
+			root.parent = parent;
+		}
+		return root;
+	}
+
+	private Node<T>[] getArrayNodes() {
+		@SuppressWarnings("unchecked")
+		Node<T> res[] = new Node[size];
+		int index = 0;
+		Node<T> current = getLeastNodeFrom(root);
+		while(current != null) {
+			res[index++] = current;
+			current = getNextNode(current);
+		}
+		return res;
+	}
+	private Node<T> getGreaterParent(Node<T> node) {
+
+		while (node.parent != null && node.parent.left != node) {
+			node = node.parent;
+		}
+		return node.parent;
+	}
+	private Node<T> getNextNode(Node<T> current) {
+		return current.right != null ? getLeastNodeFrom(current.right) : getGreaterParent(current);
 	}
 
 }
