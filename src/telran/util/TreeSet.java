@@ -317,7 +317,6 @@ public class TreeSet<T> extends AbstractCollection<T> implements SortedSet<T> {
 
 	}
 	public void balance() {
-		//TODO
 		//Create sorted Node<T>[];
 		//balance creates new root for each part [left, right] of Node<T>[]
 		//root.left = balance call from left (left, rootIndex - 1)
@@ -364,14 +363,30 @@ public class TreeSet<T> extends AbstractCollection<T> implements SortedSet<T> {
 
 	@Override
 	public T ceiling(T pattern) {
-		// TODO Auto-generated method stub
-		return null;
+		Node<T> node = getNodeOrParent(pattern);
+		int compRes = comp.compare(pattern, node.obj);
+		if (compRes != 0) {
+			node = compRes > 0 ? getGreaterParent(node) : node;
+		}
+		return node == null ? null : node.obj;
 	}
 
 	@Override
 	public T floor(T pattern) {
-		// TODO Auto-generated method stub
-		return null;
+		Node<T> node = getNodeOrParent(pattern);
+		int compRes = comp.compare(pattern, node.obj);
+		if (compRes != 0) {
+			node = compRes < 0 ? getLessParent(node) : node;
+		}
+		return node == null ? null : node.obj;
 	}
+
+	private Node<T> getLessParent(Node<T> node) {
+		while (node.parent != null && node.parent.right != node) {
+			node = node.parent;
+		}
+		return node.parent;
+	}
+	
 
 }
