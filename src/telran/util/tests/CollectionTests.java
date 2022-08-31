@@ -3,6 +3,7 @@ package telran.util.tests;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
+import java.util.IntSummaryStatistics;
 import java.util.Iterator;
 import java.util.function.Predicate;
 
@@ -181,11 +182,13 @@ abstract class CollectionTests {
 		assertEquals(93, collection.stream().mapToInt(x -> x).sum());
 		assertArrayEquals(new Integer[] {-5}, collection.stream()
 				.filter(n -> n < 0).toArray(size -> new Integer[size]));
-		//TODO
+		
 		//for only one stream method call to find out 
 		// minimal and maximal values of any collection
 		//Hint: Using IntStream
-		
+		IntSummaryStatistics summary = collection.stream().mapToInt(x -> x).summaryStatistics();
+		assertEquals(-5, summary.getMin());
+		assertEquals(40, summary.getMax());
 	}
 
 }
