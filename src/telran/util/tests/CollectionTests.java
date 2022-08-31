@@ -170,7 +170,7 @@ abstract class CollectionTests {
 	void shuffleTest() {
 		int size = collection.size();
 		Integer array[] = collection.toArray(new Integer[0]);
-		Integer arraySh [] = collection.toShuffleArray(array);
+		Integer arraySh [] = collection.toShuffleArray(new Integer[0]);
 		assertFalse(Arrays.equals(array, arraySh));
 		collection = new HashSet<Integer>();
 		fillCollection(arraySh);
